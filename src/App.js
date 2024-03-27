@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Hotels from './pages/Hotels';
+import HotelDetail from './pages/HotelDetail';
+import ReviewForm from './pages/ReviewForm';
+import AppContext from './context/AppContext';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+`;
+
+const AppWrapper = styled.div`
+  text-align: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <AppWrapper>
+        <BrowserRouter>
+          <Header />
+          <AppContext>
+              <Routes>
+                <Route path='/' element={<Hotels />} />
+                <Route path='/hotel/:hotelId' element={<HotelDetail />} />
+                <Route path='/hotel/:hotelId/new' element={<ReviewForm />} />
+              </Routes>
+            </AppContext>
+        </BrowserRouter>
+      </AppWrapper>
+    </>
   );
 }
 
